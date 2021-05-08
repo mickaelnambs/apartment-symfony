@@ -1,0 +1,54 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Création d'une annonce
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+		{{ form_start(form) }}
+		<div class="row">
+			<div class="col">
+				<div class="alert alert-light">
+					<h2>Informations générales</h2>
+					<hr>
+					{{ form_widget(form._token) }}
+        			{{ form_errors(form) }}
+					{{ form_row(form.title) }}
+					{{ form_row(form.price) }}
+					{{ form_row(form.rooms) }}
+				</div>
+				<div class="alert alert-light">
+					<h2>Détails de l'annonce</h2>
+					<hr>
+					{{ form_row(form.introduction) }}
+					{{ form_row(form.content) }}
+				</div>
+			</div>
+			<div class="col">
+				<div class="alert alert-light">
+					<h2>Images de l'annonce</h2>
+					<button type="button" class="btn btn-primary collection-add" data-collection="{{ form.medias.vars.id }}">
+						<i class="fa fa-plus"></i>
+						Ajouter une image
+					</button>
+					<div 
+						id="{{ form.medias.vars.id }}" 
+						class="collection" 
+						data-index="{{ form.medias|length == 0 ? 0 : form.medias|last.vars.name + 1 }}" 
+						data-prototype="{{ include("front_office/media/_form.html.twig", { form: form.medias.vars.prototype })|e("html_attr") }}"
+					>
+						{% for media in form.medias %}
+							{{ include("front_office/media/_form.html.twig", { form: media }) }}
+						{% endfor %}
+					</div>
+					<hr>
+					<button type="submit" class="btn btn-success">
+						<i class="fa fa-save"></i>
+						Sauvegarder
+					</button>
+				</div>
+			</div>
+		</div>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}

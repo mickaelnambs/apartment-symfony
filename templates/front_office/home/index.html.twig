@@ -1,0 +1,29 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page d'accueil!
+{% endblock %}
+{% block body %}
+	<div class="container">
+		<div class="jumbotron">
+			<h1 class="display-3">Bienvenue !</h1>
+			<p class="lead">Nous mettons en relations les voyageurs et les propriétaires qui veulent profiter d'opportunités et gagner de l'argent en proposant leur bien à la location !</p>
+			<hr class="my-4">
+			<p>Vous êtes voyageur ? Et vous voulez voir où vous pourrez loger pour votre prochain déplacement ?</p>
+			<p class="lead">
+				<a class="btn btn-primary btn-lg" href="{{ path("ad_index") }}" role="button">Voir nos annonces</a>
+			</p>
+		</div>
+		<h2>Nos appartement stars</h2>
+		<div class="row">
+			<div class="col-md-4">
+				<div class="card bg-light mb-3">
+					<div class="card-header text-center">
+						3 chambres,
+						<strong>49&euro; / nuit</strong><br>
+						<small>Pas encore note</small>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+{% endblock %}

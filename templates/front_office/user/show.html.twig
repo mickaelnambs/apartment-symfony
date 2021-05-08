@@ -1,0 +1,48 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Page de {{ user.fullName }}{% endblock %}
+
+{% block body %}
+    <div class="container">
+        <div class="row align-items-center">
+            <div class="col-3 text-center">
+                {% if user.avatar %}
+                    <img src="{{ asset('uploads/avatar/' ~ user.avatar ) }}" class="mb-3 avatar avatar-medium" alt="Avatar de {{user.fullName}}">
+                {% else %}
+                    <img src="{{ asset('uploads/img/avatar.png' ) }}" class="avatar avatar-medium" alt="Avatar de {{user.firstName}}">
+                {% endif %}
+                <br>
+                <span class="badge badge-primary">{{ user.ads | length }} annonces</span>                
+            </div>
+            <div class="col-9">
+                <h2>{{ user.fullName }}</h2>
+                {% if user is same as(app.user) %}
+                    <div class="mt-3">
+                        <a href="{{ path('profile_update') }}" class="btn btn-primary mr-2 mb-2">
+                            Modifier mes informations
+                        </a>
+                        <a href="{{ path('password_update') }}" class="btn btn-primary mb-2">
+                            Modifier mon mot de passe
+                        </a>
+                    </div>
+                {% endif %}
+            </div>
+        </div>
+        {{ user.description | raw }}
+        <hr>
+        <h2 class="text-center">Les annonce de {{ user.fullName }}</h2>
+        {% if user.ads | length > 0 %}
+            <div class="row">
+                {% for ad in user.ads %}
+                    {% include "front_office/ad/_ad.html.twig" %}
+                {% endfor %}
+            </div>
+        {% else %}
+            <div class="alert alert-warning text-center">
+                <p>
+                    <strong>{{ user.fullName }} n'a pas encore d'annonce sur le site !</strong>
+                </p>
+            </div>
+        {% endif %}
+    </div>
+{% endblock %}

@@ -1,0 +1,45 @@
+{% extends 'base.html.twig' %}
+
+{% block title %}Modification du profil
+{% endblock %}
+
+{% block body %}
+	<div class="container mt-4">
+		{{ form_start(form) }}
+		<div class="row">
+			<div class="col">
+				<div class="alert alert-light">
+					<h2 class="alert-heading">Informations générales</h2>
+					<hr>
+					{{ form_row(form.firstName) }}
+					{{ form_row(form.lastName) }}
+					{{ form_row(form.phoneNumber) }}
+					{{ form_row(form.email) }}
+					{{ form_row(form.avatar) }}
+                    {% if user.avatar %}
+                        <img src="{{ asset('uploads/avatar/' ~ user.avatar ) }}" class="avatar avatar-mini" alt="Avatar de {{user.fullName}}">
+                    {% else %}
+                        <img src="{{ asset('uploads/img/avatar.png' ) }}" class="avatar avatar-mini" alt="Avatar de {{user.fullName}}">
+                    {% endif %}
+				</div>
+			</div>
+			<div class="col">
+				<div class="alert alert-light">
+					<h2 class="alert-heading">Détails</h2>
+					<hr>
+					{{ form_row(form.introduction) }}
+					{{ form_row(form.description) }}
+
+					<hr>
+					<button type="submit" class="btn btn-success">
+						<i class="fa fa-check"></i>
+						Modifier
+					</button>
+				</div>
+			</div>
+		</div>
+		{{ form_end(form) }}
+
+	</div>
+
+{% endblock %}
