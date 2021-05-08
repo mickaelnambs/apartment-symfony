@@ -41,7 +41,7 @@ class AccountController extends BaseController
     }
 
     /**
-     * Permet de creer un compte utilisateur.
+     * Permet de créer un compte utilisateur.
      * 
      * @Route("/register", name="app_register", methods={"GET","POST"})
      *
@@ -142,7 +142,7 @@ class AccountController extends BaseController
     }
 
     /**
-     * Permet d'afficher le profil d'un user authentifiE.
+     * Permet d'afficher le profil d'un user authentifié.
      * 
      * @Route("/account", name="my_account")
      * @IsGranted("ROLE_USER")
@@ -154,6 +154,18 @@ class AccountController extends BaseController
         return $this->render("front_office/user/show.html.twig", [
             "user" => $this->getUser()
         ]);
+    }
+
+    /**
+     * Permet d'afficher la liste des réservations faites par l'utilisateur.
+     * 
+     * @Route("/accounts/bookings", name="account_bookings")
+     *
+     * @return Response
+     */
+    public function bookings(): Response
+    {
+        return $this->render("front_office/account/bookings.html.twig");
     }
 
     /**
