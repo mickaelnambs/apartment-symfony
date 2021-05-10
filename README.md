@@ -11,8 +11,9 @@ Créer un fichier `.env.local` :
 DATABASE_URL=mysql://root:password@127.0.0.1:3306/apartment
 ```
 
-## Migration
+## Configuration de la base de donnée et migration
 ```
+php bin/console doctrine:database:create
 php bin/console make:migration
 php bin/console doctrine:migrations:migrate
 ```
