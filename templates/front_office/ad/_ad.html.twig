@@ -5,7 +5,11 @@
             {{ ad.rooms }}
             chambres,
             <strong>{{ ad.price }}&euro; / nuit</strong><br>
-            <small>Pas encore note</small>
+            {% if ad.comments|length > 0 %}
+                {% include "front_office/partials/rating.html.twig" with {'rating': ad.avgRatings} %}
+            {% else %}
+                <small>Pas encore note</small>
+            {% endif %}
         </div>
         {% for media in ad.medias %}
             {% if loop.first %}

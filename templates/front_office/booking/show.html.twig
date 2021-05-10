@@ -28,6 +28,7 @@
                 <div class="alert alert-light">
                     <h2>Détails</h2>
                     <dl class="row">
+                        <dt class="col-md-4">Réservation numéro</dt>
                         <dd class="col-md-8">{{booking.id}}</dd>
                         <dt class="col-md-4">Date d'arrivée</dt>
                         <dd class="col-md-8">{{booking.startDate | date('d/m/Y')}}</dd>
@@ -38,7 +39,7 @@
                         <dt class="col-md-4">Montant total</dt>
                         <dd class="col-md-8">{{booking.amount}} &euro;</dd>
                         <dt class="col-md-4">Commentaire</dt>
-                        <dd class="col-md-8">{{ booking.comment ? booking.comment : "Pas de commentaire !" }}</dd>
+                        <dd class="col-md-8">{{ booking.comment | default('Aucun commentaire') }}</dd>
                     </dl>
                     <hr>
                     <h2 class="alert-heading">Votre hôte</h2>
@@ -63,43 +64,44 @@
 
                     <a href="{{ path("user_show", {'slug': author.slug}) }}" class="btn btn-primary">Plus d'infos sur {{author.firstName}}</a>
                 </div>
+                <div class="alert alert-light">
+                    <h2 class="alert-heading">Votre avis compte !</h2>
+                    {% if date() > date(booking.endDate) %}
+                        {% set comment = booking.ad.commentFromAuthor(app.user) %}
+                        {% if comment is not null %}
+                            <blockquote>
+                                {{comment.content}}
+                            </blockquote>
+                            <strong>Note : </strong>
+                            {% include "front_office/partials/rating.html.twig" with {"rating": comment.rating} %}
+                        {% else %}    
+                            {{ form_start(form)}}
+                            {{ form_widget(form)}}
+                            <button class="btn btn-success" type="submit">Confirmer!</button>
+                            {{ form_end(form)}}
+                        {% endif %}
+                    {% else %}
+                        <p>Vous ne pourrez pas noter cette annonce tant que votre voyage ne sera pas complet !</p>
+                    {% endif %}
+                </div>
             </div>
             <div class="col">
                 <div class="alert alert-light">
                     <h2 class="alert-heading">Votre hébergement</h2>
 
-                    <div id="carouselExampleCaptions" class="carousel slide" data-ride="carousel">
-                        <ol class="carousel-indicators">
-                            {% for media in ad.medias %}	
-                                <li 
-                                    data-target="#carouselExampleCaptions" 
-                                    data-slide-to="0" 
-                                    class="{% if loop.first %}active {% endif %}">
-                                </li>
-                            {% endfor %}
-                        </ol>
-                        <div class="carousel-inner">
-                            {% for media in ad.medias %}	
-                                <div class="carousel-item {% if loop.first %}active{% endif %}">
-                                    <img src="{{ asset(media.path) }}" class="d-block w-100" alt="...">
-                                    <div class="carousel-caption d-none d-md-block">
-                                    <h5>{{ad.title}}</h5>
-                                    <p>{{ad.introduction}}</p>
-                                    </div>
-                                </div>
-                            {% endfor %}
-                        </div>
-                        <a class="carousel-control-prev" href="#carouselExampleCaptions" role="button" data-slide="prev">
-                            <span class="carousel-control-prev-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Previous</span>
-                        </a>
-                        <a class="carousel-control-next" href="#carouselExampleCaptions" role="button" data-slide="next">
-                            <span class="carousel-control-next-icon" aria-hidden="true"></span>
-                            <span class="sr-only">Next</span>
-                        </a>
-                    </div>
+                    <h4>
+                        <a href="{{ path('ad_show', {'slug': ad.slug, 'id': ad.id }) }}">{{ad.title}}</a>
+                    </h4>
+                    {% for media in ad.medias %}
+                        {% if loop.first %}
+                            <img src="{{asset(media.path)}}" alt="Image de {{ad.title}}" class="img-fluid">
+                        {% endif %}
+                    {% endfor %}
+
+                    {{ad.content | raw}}
+
+                    <a href="{{ path('ad_show', {'slug': ad.slug, 'id': ad.id }) }}" class="btn btn-primary">Plus d'informations</a>
                 </div>
-                    <a href="{{ path('ad_show', {'slug': ad.slug, 'id': ad.id}) }}" class="btn btn-primary">Plus d'informations</a>
             </div>
         </div>
     </div>

@@ -2,11 +2,13 @@
 
 namespace App\Controller\FrontOffice;
 
-use App\Constant\MessageConstant;
 use App\Entity\Ad;
 use App\Entity\Booking;
+use App\Entity\Comment;
 use App\Form\BookingType;
+use App\Constant\MessageConstant;
 use App\Controller\BaseController;
+use App\Form\CommentType;
 use Doctrine\ORM\EntityManagerInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
@@ -81,12 +83,29 @@ class BookingController extends BaseController
      * @IsGranted("ROLE_USER")
      *
      * @param Booking $booking
+     * @param Request $request
      * @return Response
      */
-    public function show(Booking $booking): Response
+    public function show(Booking $booking, Request $request): Response
     {
+        $comment = new Comment();
+        $form = $this->createForm(CommentType::class, $comment);
+        $form->handleRequest($request);
+
+        if ($form->isSubmitted() && $form->isValid()) {
+            $comment->setAd($booking->getAd())
+                ->setAuthor($this->getUser());
+
+            if ($this->save($comment)) {
+                $this->addFlash(
+                    MessageConstant::SUCCESS_TYPE,
+                    "Votre commentaire a bien été pris en compte !"
+                );
+            }
+        }
         return $this->render("front_office/booking/show.html.twig", [
-            "booking" => $booking
+            "booking" => $booking,
+            "form" => $form->createView()
         ]);
     }
 }

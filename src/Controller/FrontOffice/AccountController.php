@@ -90,8 +90,8 @@ class AccountController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
-            $avatar = $form->get("avatar")->getData();
-            if (!empty($avatar)) $this->uploadAvatar($user, $avatar);
+            $avatarFile = $form->get("avatar")->getData();
+            if (!empty($avatarFile)) $this->uploadAvatar($avatarFile, $user);
 
             if ($this->save($user)) {
                 $this->addFlash(
