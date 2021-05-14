@@ -50,6 +50,10 @@ div.carousel-caption {
     text-decoration: none;
 }
 
+.alert .btn {
+    color: white;
+}
+
 .card {
     display: flex;
     margin-top:7%;
