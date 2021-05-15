@@ -6,8 +6,10 @@ use App\Entity\Ad;
 use App\Form\AdType;
 use App\Repository\AdRepository;
 use App\Constant\MessageConstant;
+use App\Constant\PageConstant;
 use App\Controller\BaseController;
 use Doctrine\ORM\EntityManagerInterface;
+use Knp\Component\Pager\PaginatorInterface;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
 use Symfony\Component\Routing\Annotation\Route;
@@ -40,12 +42,19 @@ class AdController extends BaseController
      * 
      * @Route("/", name="ad_index", methods={"GET","POST"})
      *
+     * @param PaginatorInterface $paginator
+     * @param Request $request
      * @return Response
      */
-    public function index(): Response
+    public function index(PaginatorInterface $paginator, Request $request): Response
     {
-        return $this->render('front_office/ad/index.html.twig', [
-            'ads' => $this->adRepository->findAll()
+        $pagination = $paginator->paginate(
+            $this->adRepository->findAll(),
+            $request->query->get("page", PageConstant::DEFAULT_PAGE),
+            PageConstant::NUM_ITEMS_PER_PAGE
+        );
+        return $this->render("front_office/ad/index.html.twig", [
+            "ads" => $pagination
         ]);
     }
 

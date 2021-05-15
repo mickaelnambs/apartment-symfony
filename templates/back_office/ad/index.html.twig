@@ -1,0 +1,60 @@
+{% extends 'back_office/base.html.twig' %}
+
+{% block title %}Administration des annonces !{% endblock %}
+
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-4 text-center">Gestion des annonces</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th class="text-center">#</th>
+                    <th>Titre</th>
+                    <th class="text-center">Auteur</th>
+                    <th class="text-center">Réservations</th>
+                    <th class="text-center">Note</th>
+                    <th class="text-center">Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for ad in ads %}
+                    {% set author = ad.author %}
+                    <tr>
+                        <td class="text-center">{{ad.id}}</td>
+                        <td>{{ad.title}}</td>
+                        <td class="text-center">
+                            {% if author.avatar %}
+                                <img src="{{ asset("uploads/avatar" ~ author.avatar )}}" alt="Avatar de {{author.fullName}}" class="avatar avatar-micro">
+                            {% else %}
+                                <img src="{{ asset('uploads/img/avatar.png' ) }}" alt="Avatar de {{author.fullName}}" class="avatar avatar-micro">
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <span class="badge badge-primary">
+                                {{ad.bookings|length}}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge badge-primary">
+                                {{ad.avgRatings|number_format(1, ',', ' ')}}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <a href="#" class="btn btn-sm btn-secondary mr-2">
+                                <span class="fa fa-edit"></span> 
+                                Modifier
+                            </a>
+                            <a href="#" class="btn btn-sm btn-danger">
+                                <span class="fa fa-trash"></span>
+                                Supprimer
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            {{ knp_pagination_render(ads)}}
+        </div>
+    </div>
+{% endblock %}

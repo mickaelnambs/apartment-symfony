@@ -26,6 +26,12 @@ div.carousel-caption {
     border-radius: 40px;
 }
 
+.avatar-micro {
+    max-width: 25px;
+    min-width: 25px;
+    border-radius: 20px;
+}
+
 .image {
     max-width: 45px;
     max-height: 45px;

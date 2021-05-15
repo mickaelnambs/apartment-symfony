@@ -1,0 +1,23 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<meta charset="UTF-8">
+		<title>BNB Administration - {% block title %}Welcome!{% endblock %}</title>
+		<meta name="viewport" content="width=device-width, user-scalable-no">
+        {% block stylesheets %}
+			{% include "back_office/partials/link.html.twig" %}
+		{% endblock %}
+	</head>
+	<body>
+        {% include "back_office/partials/header.html.twig" %}
+		{% include "back_office/partials/_message.html.twig" %}
+		<div class="container-fluid mt-4">
+			{% block body %}{% endblock %}
+		</div>
+        {% include "back_office/partials/footer.html.twig" %}
+        
+		{% block javascripts %}
+			{% include "back_office/partials/script.html.twig" %}
+		{% endblock %}
+	</body>
+</html
