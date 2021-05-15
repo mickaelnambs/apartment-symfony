@@ -164,10 +164,20 @@ class AdController extends BaseController
      */
     public function delete(Ad $ad): Response
     {
-        if ($this->remove($ad)) {
+        if (count($ad->getBookings()) > 0) {
             $this->addFlash(
-                MessageConstant::class,
-                "Ad deleted successfully !"
+                MessageConstant::ERROR_TYPE,
+                "Vous ne pouvez pas supprimer cette annonce, car elle contient des réservations !"
+            );
+            return $this->redirectToRoute("ad_show", [
+                'slug' => $ad->getSlug(),
+                'id' => $ad->getId()
+            ]);
+        } else {
+            $this->remove($ad);
+            $this->addFlash(
+                MessageConstant::SUCCESS_TYPE,
+                "Annonce supprmée avec succès !"
             );
             return $this->redirectToRoute("ad_index");
         }

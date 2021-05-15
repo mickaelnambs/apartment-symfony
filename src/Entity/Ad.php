@@ -68,7 +68,7 @@ class Ad
     private $rooms;
 
     /**
-     * @ORM\OneToMany(targetEntity=Media::class, cascade={"persist"}, mappedBy="ad")
+     * @ORM\OneToMany(targetEntity=Media::class, cascade={"persist", "remove"}, mappedBy="ad")
      * @Assert\Count(min=1, minMessage="Vous devez ajouter au moins une image.")
      */
     private $medias;

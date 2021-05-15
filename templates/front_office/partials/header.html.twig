@@ -26,15 +26,21 @@
 				<li class="nav-item dropdown">
 					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
 						{% if app.user.avatar %}
-				 			<img src="{{ asset("uploads/avatar/" ~ app.user.avatar) }}" class="avatar avatar-mini" alt="Avatar de {{app.user.fullName}}"> {{app.user.firstName}}
+				 			<img src="{{ asset("uploads/avatar/" ~ app.user.avatar) }}" class="avatar avatar-micro mr-2" alt="Avatar de {{app.user.fullName}}"> {{app.user.firstName}}
 						{% else %}
-							<img src="{{ asset('uploads/img/avatar.png' ) }}" class="avatar avatar-mini" alt="Avatar de {{app.user.firstName}}"> {{app.user.firstName}}
+							<img src="{{ asset('uploads/img/avatar.png' ) }}" class="avatar avatar-micro mr-2" alt="Avatar de {{app.user.firstName}}"> {{app.user.firstName}}
 						{% endif %}
 					</a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDopdownLink">
 						<a class="dropdown-item" href="{{ path("ad_new")}}">
 							Créer une annonce
 						</a>
+						<div class="dropdown-divider"></div>
+						{% if is_granted("ROLE_ADMIN") %}
+							<a class="dropdown-item" href="{{ path("admin_ad_index")}}">
+								Administrer
+							</a>
+						{% endif %}
 						<div class="dropdown-divider"></div>
 						<a class="dropdown-item" href="{{ path("account_bookings")}}">
 							Mes réservations

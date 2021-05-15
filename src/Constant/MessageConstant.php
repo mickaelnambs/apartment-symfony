@@ -14,5 +14,5 @@ class MessageConstant
     public const WARNING_TYPE = 'warning';
 
     /** @var string */
-    public const ERROR_TYPE = 'error';
+    public const ERROR_TYPE = 'danger';
 }

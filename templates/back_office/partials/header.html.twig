@@ -48,11 +48,15 @@
 			</li>
 			{% if is_granted("ROLE_ADMIN") %}
 				<li class="nav-item dropdown">
-					<a href="#" class="nav-link dropdown-toggle" data-toggle="dropdown" id="accountDropdownLink">
-						{{app.user.firstName}}
+					<a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+						{% if app.user.avatar %}
+				 			<img src="{{ asset("uploads/avatar/" ~ app.user.avatar) }}" class="avatar avatar-micro mr-2" alt="Avatar de {{app.user.fullName}}"> {{app.user.firstName}}
+						{% else %}
+							<img src="{{ asset('uploads/img/avatar.png' ) }}" class="avatar avatar-micro mr-2" alt="Avatar de {{app.user.firstName}}"> {{app.user.firstName}}
+						{% endif %}
 					</a>
 					<div class="dropdown-menu dropdown-menu-right" aria-labelledby="accountDopdownLink">
-						<a href="{{ path('admin_account_logout') }}" class="dropdown-item">Déconnexion</a>
+						<a href="{{ path('admin_app_logout') }}" class="dropdown-item">Déconnexion</a>
 					</div>
 				</li>
 			{% endif %}

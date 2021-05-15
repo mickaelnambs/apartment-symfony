@@ -1,0 +1,107 @@
+{% extends 'back_office/base.html.twig' %}
+
+{% block title %}Modification de l'annonce {{ad.title}}
+{% endblock %}
+
+{% block body %}
+	<div class="container">
+        <h3 class="text-center my-3">Modification de l'annonce: <i>{{ad.title}}</i></h3>
+		{{ form_start(form) }}
+		<div class="row">
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+                        <h4 class="card-title text-center">Corriger l'annonce</h4>
+                    </div>
+                    <div class="card-body">
+                        {{ form_widget(form._token) }}
+                        {{ form_errors(form) }}
+                        {{ form_row(form.title) }}
+                        {{ form_row(form.price) }}
+                        {{ form_row(form.rooms) }}
+                        {{ form_row(form.introduction) }}
+					    {{ form_row(form.content) }}
+                        <button type="button" class="btn btn-primary collection-add mb-2" data-collection="{{ form.medias.vars.id }}">
+                            <i class="fa fa-plus"></i>
+                            Ajouter une image
+                        </button>
+                        <div 
+                            id="{{ form.medias.vars.id }}" 
+                            class="collection" 
+                            data-index="{{ form.medias|length == 0 ? 0 : form.medias|last.vars.name + 1 }}" 
+                            data-prototype="{{ include("front_office/media/_form.html.twig", { form: form.medias.vars.prototype })|e("html_attr") }}"
+                        >
+                            {% for media in form.medias %}
+                                {{ include("front_office/media/_form.html.twig", { form: media }) }}
+                            {% endfor %}
+                        </div>
+                        <hr>
+                    </div>
+                    <div class="card-footer">
+                        <button type="submit" class="btn btn-success">
+                            <i class="fa fa-save"></i>
+                            Sauvegarder
+                        </button>
+                        <a href="{{ path("admin_ad_index") }}" class="btn btn-link">
+                            Retour
+                            <i class="fa fa-arrow-right"></i>
+                        </a>
+                    </div>
+				</div>
+			</div>
+			<div class="col">
+				<div class="card bg-light">
+					<div class="card-header">
+                        <h4 class="text-center">Les réservations</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <tr>
+                                    <th>#</th>
+                                    <th cla>Voyageur</th>
+                                    <th class="text-center">Date de réservation</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for booking in ad.bookings %}
+                                    <tr>
+                                        <td>{{booking.id}}</td>
+                                        <td>{{booking.booker.fullName}}</td>
+                                        <td class="text-center">{{booking.startDate|date('d-m-Y H:i')}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+				</div>
+                <div class="card bg-light">
+                    <div class="card-header">
+                        <h4 class="card-title text-center">Les commentaires</h4>
+                    </div>
+                    <div class="card-body">
+                        <table class="table">
+                            <thead>
+                                <th>#</th>
+                                <th>Voyageur</th>
+                                <th>Commentaire</th>
+                                <th>Note</th>
+                            </thead>
+                            <tbody>
+                                {% for comment in ad.comments %}    
+                                    <tr>
+                                        <td>{{comment.id}}</td>
+                                        <td>{{comment.author.fullName}}</td>
+                                        <td>{{comment.content}}</td>
+                                        <td>{{comment.rating}}</td>
+                                    </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+			</div>
+		</div>
+		{{ form_end(form) }}
+	</div>
+{% endblock %}
