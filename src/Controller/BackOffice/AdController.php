@@ -101,7 +101,7 @@ class AdController extends BaseController
         if (count($ad->getBookings()) > 0) {
             $this->addFlash(
                 MessageConstant::ERROR_TYPE,
-                "Vous ne pouvez pas supprimer cette annonce, car elle contient des réservations !"
+                "Vous ne pouvez pas supprimer cette annonce, car elle possède déjà des réservations !"
             );
             return $this->redirectToRoute("admin_ad_index");
         } else {

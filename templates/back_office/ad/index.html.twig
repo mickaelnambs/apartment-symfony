@@ -44,7 +44,7 @@
                                 <span class="fa fa-edit"></span> 
                                 Modifier
                             </a>
-                            <a href="{{ path("admin_ad_delete", {'id': ad.id}) }}" class="btn btn-sm btn-danger">
+                            <a href="{{ path("admin_ad_delete", {'id': ad.id}) }}" class="btn btn-sm btn-danger" onclick="return confirm(`Êtes vous sur de vouloir supprimer l'annonce : {{ad.title}} ?`)">
                                 <span class="fa fa-trash"></span>
                                 Supprimer
                             </a>
