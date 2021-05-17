@@ -42,7 +42,6 @@ class AdController extends BaseController
      * 
      * @Route("/", name="admin_ad_index", methods={"GET","POST"})
      *
-     *
      * @param PaginatorInterface $paginator
      * @param Request $request
      * @return Response
@@ -81,6 +80,10 @@ class AdController extends BaseController
                 );
                 return $this->redirectToRoute("admin_ad_index");
             }
+            $this->addFlash(
+                MessageConstant::ERROR_TYPE,
+                "Il y a une erreur lors de la modification !"
+            );
             return $this->redirectToRoute("admin_ad_edit", ["id" => $ad->getId()]);
         }
         return $this->render("back_office/ad/edit.html.twig", [

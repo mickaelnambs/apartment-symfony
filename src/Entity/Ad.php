@@ -89,6 +89,11 @@ class Ad
      */
     private $comments;
 
+    public function __toString()
+    {
+        return $this->title;
+    }
+
     public function __construct()
     {
         $this->medias = new ArrayCollection();

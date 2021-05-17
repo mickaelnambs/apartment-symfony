@@ -1,0 +1,56 @@
+{% extends "back_office/base.html.twig" %}
+{% block title %} Administration des commentaires {% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-4 text-center">Administration des commentaires</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Date</th>
+                    <th>Auteur</th>
+                    <th>Commentaire</th>
+                    <th>Note</th>
+                    <th>Annonce</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for comment in comments %}
+                    {% set author = comment.author %}
+                    <tr>
+                        <td>{{comment.id}}</td>
+                        <td>{{comment.createdAt | date('d-m-Y H:i')}}</td>
+                        <td>
+                            {% if author.avatar %}
+                                <img src="{{ asset("uploads/avatar/" ~ author.avatar) }}" alt="Avatar de {{author.fullName}}" class="avatar avatar-micro">
+                            {% else %}
+                                <img src="{{ asset("uploads/img/avatar.png") }}" alt="Avatar de {{author.fullName}}" class="avatar avatar-micro">
+                            {% endif %}
+                        </td>
+                        <td>{{comment.content}}</td>
+                        <td>
+                            <span class="badge badge-primary">
+                                {{comment.rating}}
+                            </span>
+                        </td>
+                        <td>{{comment.ad}}</td>
+                        <td>
+                            <a href="{{ path("admin_comment_edit", {"id": comment.id }) }}" class="btn btn-sm btn-secondary mr-3">
+                                <span class="fa fa-edit"></span>
+                                Modifier
+                            </a>
+                            <a href="{{ path("admin_comment_delete", {"id": comment.id}) }}" class="btn btn-sm btn-danger"  onclick="return confirm(`Êtes vous sur de vouloir supprimer le commentaire de : {{comment.author}} ?`)">
+                                <span class="fa fa-trash"></span>
+                                supprimer
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            {{ knp_pagination_render(comments)}}
+        </div>
+    </div>
+{% endblock %}
