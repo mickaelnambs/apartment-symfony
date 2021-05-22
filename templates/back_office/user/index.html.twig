@@ -1,0 +1,65 @@
+{% extends "back_office/base.html.twig" %}
+{% block title %}Administration des utilisateurs{% endblock %}
+{% block body %}
+    <div class="container-fluid">
+        <h1 class="my-4 text-center">Administration des utilisateurs</h1>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>#</th>
+                    <th>Email</th>
+                    <th>Nom de l'utilisateur</th>
+                    <th>Avatar</th>
+                    <th class="text-center">Nb Annonces</th>
+                    <th class="text-center">Nb Réservations</th>
+                    <th class="text-center">Rôles</th>
+                    <th>Actions</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for user in users %}
+                    <tr>
+                        <td>{{user.id}}</td>
+                        <td>{{user.email}}</td>
+                        <td>{{user.fullName}}</td>
+                        <td>
+                            {% if user.avatar %}
+                                <img src="{{ asset("uploads/avatar/" ~  user.avatar) }}" alt="Avatar de {{ user.fullName}}" class="avatar avatar-micro">
+                            {% else %}
+                                <img src="{{ asset("uploads/img/avatar.png") }}" alt="Avatar de {{ user.fullName}}" class="avatar avatar-micro">
+                            {% endif %}
+                        </td>
+                        <td class="text-center">
+                            <span class="badge badge-primary">
+                                {{user.ads|length}}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            <span class="badge badge-secondary">
+                                {{user.bookings|length}}
+                            </span>
+                        </td>
+                        <td class="text-center">
+                            {% for role in user.roles %}
+                                {% if role == "ROLE_ADMIN" %}
+                                    Administrateur,
+                                {% elseif role == "ROLE_USER" %}
+                                    Utilisateur
+                                {% endif %}
+                            {% endfor %}
+                        </td>
+                        <td>
+                            <a href="{{ path("admin_profile_update", {'id': user.id})}}" class="btn btn-primary btn-sm mr-3">
+                                <span class="fa fa-edit"></span>
+                                Modifier
+                            </a>
+                        </td>
+                    </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+        <div class="pagination">
+            {{knp_pagination_render(users)}}
+        </div>
+    </div>
+{% endblock %}

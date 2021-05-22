@@ -81,7 +81,7 @@ class User implements UserInterface
     private $phoneNumber;
 
     /**
-     * @ORM\OneToMany(targetEntity=Ad::class, mappedBy="author")
+     * @ORM\OneToMany(targetEntity=Ad::class, mappedBy="author", cascade={"remove"})
      */
     private $ads;
 
@@ -96,12 +96,12 @@ class User implements UserInterface
     private $slug;
 
     /**
-     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="booker")
+     * @ORM\OneToMany(targetEntity=Booking::class, mappedBy="booker", cascade={"remove"})
      */
     private $bookings;
 
     /**
-     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", orphanRemoval=true)
+     * @ORM\OneToMany(targetEntity=Comment::class, mappedBy="author", orphanRemoval=true, cascade={"remove"})
      */
     private $comments;
 
