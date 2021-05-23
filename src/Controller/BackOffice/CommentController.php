@@ -48,11 +48,15 @@ class CommentController extends BaseController
      */
     public function index(PaginatorInterface $paginator, Request $request): Response
     {
+        
         $pagination = $paginator->paginate(
             $this->commentRepository->findAll(),
             $request->query->getInt("page", PageConstant::DEFAULT_PAGE),
             PageConstant::NUM_ITEMS_PER_PAGE
         );
+
+        // $comment = $this->commentRepository->findBy()
+        // dump($comment);
         return $this->render("back_office/comment/index.html.twig", [
             "comments" => $pagination
         ]);
