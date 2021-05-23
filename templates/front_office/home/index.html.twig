@@ -15,15 +15,36 @@
 		</div>
 		<h2>Nos appartement stars</h2>
 		<div class="row">
-			<div class="col-md-4">
-				<div class="card bg-light mb-3">
-					<div class="card-header text-center">
-						3 chambres,
-						<strong>49&euro; / nuit</strong><br>
-						<small>Pas encore note</small>
+			{% for data in ads %}
+				{% include 'front_office/ad/_ad.html.twig' with {'ad': data.annonce} %}
+			{% endfor %}
+		</div>
+		<h2 class="h1 my-5">Nos propriétaires stars !</h2>
+    
+		<div class="row">
+			{% for data in users %}
+				{% set user = data.user %}
+				<div class="col">
+					<div class="card border-secondary mb-3">
+						<div class="card-body">
+							<h4 class="card-title">{{user.fullName}}</h4>
+
+							<hr>
+
+							<div class="card-text">
+								{% if user.avatar %}
+                                	<img src="{{ asset("uploads/avatar/" ~  user.avatar) }}" alt="Avatar de {{ user.fullName}}" class="avatar avatar-medium float-left mr-3">
+								{% else %}
+									<img src="{{ asset("uploads/img/avatar.png") }}" alt="Avatar de {{ user.fullName}}" class="avatar avatar-medium float-left mr-3">
+								{% endif %}
+								<p>{{user.introduction}}</p>
+								<a href="{{ path('user_show', {'slug': user.slug})}}" class="btn btn-success float-right">En savoir plus!</a>
+							</div>
+						</div>
 					</div>
 				</div>
-			</div>
+			{% endfor %}
 		</div>
+
 	</div>
 {% endblock %}
