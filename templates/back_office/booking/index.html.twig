@@ -10,6 +10,8 @@
                     <th>Date</th>
                     <th>Visiteur</th>
                     <th>Annonce</th>
+                    <th>Durée</th>
+                    <th>Montant</th>
                     <th>Actions</th>
                 </tr>
             </thead>
@@ -27,6 +29,8 @@
                             {% endif %}
                         </td>
                         <td>{{booking.ad}}</td>
+                        <td>{{booking.duration}}</td>
+                        <td>{{booking.amount}} &euro; </td>
                         <td>
                             <a href="{{ path('admin_booking_edit', {'id': booking.id }) }}" class="btn btn-secondary btn-sm mr-3">
                                 <span class="fa fa-edit"></span>

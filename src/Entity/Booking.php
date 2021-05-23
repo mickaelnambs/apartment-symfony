@@ -62,6 +62,7 @@ class Booking
      * Callback appele a chaque fois qu'on cree une reservation.
      * 
      * @ORM\PrePersist
+     * @ORM\PreUpdate
      *
      * @return void
      */

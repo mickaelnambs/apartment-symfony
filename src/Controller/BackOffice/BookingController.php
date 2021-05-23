@@ -74,6 +74,7 @@ class BookingController extends BaseController
         $form->handleRequest($request);
 
         if ($form->isSubmitted() && $form->isValid()) {
+            $booking->setAmount(0);
             if ($this->save($booking)) {
                 $this->addFlash(
                     MessageConstant::SUCCESS_TYPE,
