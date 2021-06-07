@@ -22,7 +22,7 @@ security:
             form_login:
                 login_path: admin_app_login
                 check_path: admin_app_login
-                default_target_path: admin_ad_index
+                default_target_path: dashboard
 
             logout:
                 path: admin_app_logout
